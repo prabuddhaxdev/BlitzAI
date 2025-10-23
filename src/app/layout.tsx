@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Blitz AI",
-  description: "AI Website Builder",
+  description: "AI Website Builder (Generator)",
 };
 
 export default function RootLayout({
