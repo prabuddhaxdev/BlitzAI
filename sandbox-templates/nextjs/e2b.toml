@@ -1,0 +1,17 @@
+# This is a config for E2B sandbox template.
+# You can use template ID (f1m4i1qs8k9krega18jc) or template name (blitz-ai-nextjs-template-1) to create a sandbox:
+
+# Python SDK
+# from e2b import Sandbox, AsyncSandbox
+# sandbox = Sandbox.create("blitz-ai-nextjs-template-1") # Sync sandbox
+# sandbox = await AsyncSandbox.create("blitz-ai-nextjs-template-1") # Async sandbox
+
+# JS SDK
+# import { Sandbox } from 'e2b'
+# const sandbox = await Sandbox.create('blitz-ai-nextjs-template-1')
+
+team_id = "cbf6430c-2095-43a4-b78f-4700ed55455a"
+start_cmd = "/compile_page.sh"
+dockerfile = "e2b.Dockerfile"
+template_name = "blitz-ai-nextjs-template-1"
+template_id = "f1m4i1qs8k9krega18jc"
