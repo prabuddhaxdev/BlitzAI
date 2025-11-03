@@ -43,7 +43,7 @@ Blitz AI is an AI-powered web application generator that transforms your ideas i
 1. Clone the repository:
 ```bash
 git clone https://github.com/prabuddhaxdev/BlitzAI.git
-cd vibe
+cd blitz
 ```
 
 2. Install dependencies:

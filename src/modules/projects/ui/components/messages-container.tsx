@@ -41,7 +41,7 @@ export function MessagesContainer({ projectId }: props) {
               key={message.id}
               content={message.content}
               role={message.role}
-              fragment={message.Fragment}
+              fragment={message.fragment}
               createdAt={message.createdAt}
               isActiveFragment={false}
               onFragmentClick={() => {}}
@@ -54,7 +54,7 @@ export function MessagesContainer({ projectId }: props) {
       </div>
 
       <div className="relative p-3 pt-1">
-        <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-t from-background/70 to-transparent pointer-events-none" />
+        <div className="absolute -top-6 left-0 right-0 h-6 bg-linear-to-t from-background/70 to-transparent pointer-events-none" />
         <MessageForm projectId={projectId} />
       </div>
     </div>

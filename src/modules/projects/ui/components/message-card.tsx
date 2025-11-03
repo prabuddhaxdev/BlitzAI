@@ -12,7 +12,7 @@ interface UserMessageProps {
 function UserMessage({ content }: UserMessageProps) {
   return (
     <div className="flex justify-end pb-4 pr-2 pl-10">
-      <Card className="rounded-lg bg-muted p-3 shadow-none border-none max-w-[80%] wrap-break-words">
+      <Card className="rounded-lg bg-muted p-3 shadow-none border-none max-w-[80%] wrap-break-word">
         {content}
       </Card>
     </div>
@@ -82,12 +82,12 @@ function AssistantMessage({
       <div className="flex items-center gap-2 pl-2 mb-2">
         <Image
           src="/logo.svg"
-          alt="Vibe"
+          alt="Blitz"
           width={18}
           height={18}
           className="shrink-0"
         />
-        <span className="text-sm font-medium">Vibe</span>
+        <span className="text-sm font-medium">Blitz</span>
         <span className="text-xs font-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 duration-300">
           {format(createdAt, "HH:mm 'on' MMMM d, yyyy")}
         </span>
