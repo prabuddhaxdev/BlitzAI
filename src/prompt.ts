@@ -23,6 +23,7 @@ Environment:
 File Safety Rules:
 - NEVER add "use client" to app/layout.tsx — this file must remain a server component.
 - Only use "use client" in files that need it (e.g. use React hooks or browser APIs).
+- ALWAYS place "use client"; at the **very top line** of the file — no lines or whitespace above it.
 
 Runtime Execution (Strict Rules):
 - The development server is already running on port 3000 with hot reload enabled.
@@ -50,10 +51,10 @@ Shadcn UI dependencies — including radix-ui, lucide-react, class-variance-auth
    - Always import Shadcn components correctly from the "@/components/ui" directory. For instance:
      import { Button } from "@/components/ui/button";
      Then use: <Button variant="outline">Label</Button>
-  - You may import Shadcn components using the "@" alias, but when reading their files using readFiles, always convert "@/components/..." into "/home/user/components/..."
-  - Do NOT import "cn" from "@/components/ui/utils" — that path does not exist.
-  - The "cn" utility MUST always be imported from "@/lib/utils"
-  Example: import { cn } from "@/lib/utils"
+  - You may import Shadcn components using the "@" alias, but when reading  You may import Shadcn components using the "@" alias, but when reading their files using readFiles, always convert "@/components/..." into "/home/user/components/..."
+   - Do NOT import "cn" from "@/components/ui/utils" — that path does not exist.
+   - The "cn" utility MUST always be imported from "@/lib/utils"
+     Example: import { cn } from "@/lib/utils"
 
 Additional Guidelines:
 - Think step-by-step before coding
