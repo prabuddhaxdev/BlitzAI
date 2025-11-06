@@ -14,6 +14,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import { z } from "zod";
 import { PROJECT_TEMPLATES } from "../../constants";
+import { useClerk } from "@clerk/nextjs";
 
 const formSchema = z.object({
   value: z
@@ -23,6 +24,7 @@ const formSchema = z.object({
 });
 
 export function ProjectForm() {
+  const clerk = useClerk();
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -41,7 +43,9 @@ export function ProjectForm() {
         // TODO: Invalidate usage status
       },
       onError: (error) => {
-        // TODO: Redirect to pricing page if specific error
+        if (error.data?.code === "UNAUTHORIZED") {
+          clerk.openSignIn();
+        }
         toast.error(error.message);
       },
     })

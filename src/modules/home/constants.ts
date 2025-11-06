@@ -1,5 +1,17 @@
 export const PROJECT_TEMPLATES = [
   {
+    emoji: "🏃‍♂️",
+    title: "Build a fitness tracker",
+    prompt:
+      "Build a fitness tracking dashboard with stat cards, activity charts, and a workout log section using local state. Use balanced spacing, energetic colors, and a motivating UI theme.",
+  },
+  {
+    emoji: "🍔",
+    title: "Build a restaurant website",
+    prompt:
+      "Build a restaurant homepage with a hero banner, menu sections, and a reservation form. Use mock menu data and focus on appealing food imagery, typography, and elegant spacing.",
+  },
+  {
     emoji: "🎬",
     title: "Build a Netflix clone",
     prompt:
@@ -24,12 +36,6 @@ export const PROJECT_TEMPLATES = [
       "Build a file manager with folder list, file grid, and options to rename or delete items using mock data and local state. Focus on spacing, clear icons, and visual distinction between folders and files.",
   },
   {
-    emoji: "📺",
-    title: "Build a YouTube clone",
-    prompt:
-      "Build a YouTube-style homepage with mock video thumbnails, a category sidebar, and a modal preview with title and description using local state. Ensure clean alignment and a well-organized grid layout.",
-  },
-  {
     emoji: "🛍️",
     title: "Build a store page",
     prompt:
@@ -42,9 +48,15 @@ export const PROJECT_TEMPLATES = [
       "Build an Airbnb-style listings grid with mock data, filter sidebar, and a modal with property details using local state. Use card spacing, soft shadows, and clean layout for a welcoming design.",
   },
   {
-    emoji: "🎵",
-    title: "Build a Spotify clone",
+    emoji: "📈",
+    title: "Build a finance dashboard",
     prompt:
-      "Build a Spotify-style music player with a sidebar for playlists, a main area for song details, and playback controls. Use local state for managing playback and song selection. Prioritize layout balance and intuitive control placement for a smooth user experience. Use dark mode.",
+      "Build a finance dashboard showing income, expenses, and trend charts using mock data. Include category filters and summary cards. Focus on balance, clarity, and data visualization consistency.",
+  },
+  {
+    emoji: "🛫",
+    title: "Build a travel booking site",
+    prompt:
+      "Build a travel booking homepage with destination cards, filters, and a booking modal using mock data. Focus on vibrant visuals, spacious layout, and smooth transitions for an inspiring experience.",
   },
 ] as const;

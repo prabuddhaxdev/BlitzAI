@@ -17,11 +17,11 @@ export default function Home() {
         </div>
 
         <h1 className="text-2xl md:text-5xl font-bold text-center">
-          Build something with Blitz
+          Bring your ideas to life with Blitz AI.
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground text-center">
-          Create app and website by chatting with AI
+          Create apps and websites by chatting with AI
         </p>
 
         <div className="max-w-3xl mx-auto w-full">
