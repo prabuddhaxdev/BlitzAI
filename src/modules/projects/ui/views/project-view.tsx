@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeIcon, CrownIcon, EyeIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FileExplorer } from "@/components/file-explorer";
 
 interface props {
   projectId: string;
@@ -22,6 +23,8 @@ interface props {
 
 export function ProjectView({ projectId }: props) {
   const [activeFragment, setActiveFragment] = useState<Fragment | null>(null);
+   const [tabState, setTabState] = useState<"preview" | "code">("preview");
+   
   return (
     <div className="h-screen">
       <ResizablePanelGroup direction="horizontal">
