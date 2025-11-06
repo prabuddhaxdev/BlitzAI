@@ -145,7 +145,7 @@ export const codeAgentFunction = inngest.createFunction(
     });
 
     const network = createNetwork<AgentState>({
-      name: "codding-agent-network",
+      name: "coding-agent-network",
       agents: [codeAgent],
       maxIter: 15,
       router: async ({ network }) => {
@@ -175,6 +175,7 @@ export const codeAgentFunction = inngest.createFunction(
 
     await step.run("save-result", async () => {
       if (isError) {
+         console.error(result.state.data.summary);
         return await prisma.message.create({
           data: {
             projectId: event.data.projectId,

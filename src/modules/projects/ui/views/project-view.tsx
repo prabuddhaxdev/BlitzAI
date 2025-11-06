@@ -24,7 +24,7 @@ interface props {
 export function ProjectView({ projectId }: props) {
   const [activeFragment, setActiveFragment] = useState<Fragment | null>(null);
    const [tabState, setTabState] = useState<"preview" | "code">("preview");
-   
+
   return (
     <div className="h-screen">
       <ResizablePanelGroup direction="horizontal">
@@ -45,7 +45,7 @@ export function ProjectView({ projectId }: props) {
           </Suspense>
         </ResizablePanel>
 
-        <ResizableHandle withHandle />
+        <ResizableHandle className="hover:bg-primary transition-colors" />
 
         <ResizablePanel defaultSize={65} minSize={50}>
           <Tabs

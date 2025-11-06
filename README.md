@@ -89,7 +89,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your app running!
 ## 📖 How It Works
 
 1. **Describe Your App**: Enter a natural language prompt describing the web application you want to create
-2. **AI Generation**: Vibe's AI analyzes your prompt and generates the complete application code
+2. **AI Generation**: Blitz's AI analyzes your prompt and generates the complete application code
 3. **Live Preview**: See your app running instantly in the integrated preview
 4. **Share & Collaborate**: Get a shareable URL to show your creation to others
 5. **Iterate**: Refine your prompts to modify and improve your generated apps
