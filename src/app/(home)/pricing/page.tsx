@@ -14,7 +14,7 @@ export default function Pricing() {
         <div className="flex flex-col items-center">
           <Image
             src="/logo.svg"
-            alt="Vibe"
+            alt="Blitz"
             width={50}
             height={50}
             className="hidden md:block"
