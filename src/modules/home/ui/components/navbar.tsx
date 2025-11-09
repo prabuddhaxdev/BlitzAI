@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { UserControl } from "@/components/user-control";
 import { useScroll } from "@/hooks/use-scroll";
