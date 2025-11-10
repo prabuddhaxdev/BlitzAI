@@ -28,7 +28,7 @@ export function MessagesContainer({
       },
       {
         // TODO: Temporary Live update message
-        refetchInterval: 5000,
+        refetchInterval: 2000,
       }
     )
   );

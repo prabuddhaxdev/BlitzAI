@@ -13,6 +13,7 @@ import { getSandbox, lastAssistantMessageContent } from "./utils";
 import z from "zod";
 import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from "@/prompt";
 import prisma from "@/lib/db";
+import { SANDBOX_TIMEOUT } from "./types";
 
 interface AgentState {
   summary: string;
@@ -26,6 +27,7 @@ export const codeAgentFunction = inngest.createFunction(
     // 🛠️ Step 1: Create a sandbox from your template
     const sandboxId = await step.run("get-sandbox", async () => {
       const sandbox = await Sandbox.create("blitz-ai-nextjs-template-1");
+      await sandbox.setTimeout(SANDBOX_TIMEOUT);
       return sandbox.sandboxId;
     });
 
@@ -39,6 +41,7 @@ export const codeAgentFunction = inngest.createFunction(
         orderBy: {
           createdAt: "desc",
         },
+        take: 5,
       });
 
       for (const message of messages) {
@@ -51,7 +54,7 @@ export const codeAgentFunction = inngest.createFunction(
         });
       }
 
-      return formattedMessage;
+      return formattedMessage.reverse();
     });
 
     const state = createState<AgentState>(
@@ -197,67 +200,68 @@ export const codeAgentFunction = inngest.createFunction(
       },
     });
 
-        const result = await network.run(event.data.value, { state });
+    const result = await network.run(event.data.value, { state });
 
-        const fragmentTitleGenerator = createAgent({
-          name: "fragment-title-generator",
-          description: "A fragment title generator",
-          system: FRAGMENT_TITLE_PROMPT,
-          model: openai({
-            model: "gpt-4.1",
-          }),
-        });
+    const fragmentTitleGenerator = createAgent({
+      name: "fragment-title-generator",
+      description: "A fragment title generator",
+      system: FRAGMENT_TITLE_PROMPT,
+      model: openai({
+        model: "gpt-4.1",
+      }),
+    });
 
-        const responseGenerator = createAgent({
-          name: "response-generator",
-          description: "A response generator",
-          system: RESPONSE_PROMPT,
-          model: openai({
-            model: "gpt-4.1",
-          }),
-        });
+    const responseGenerator = createAgent({
+      name: "response-generator",
+      description: "A response generator",
+      system: RESPONSE_PROMPT,
+      model: openai({
+        model: "gpt-4.1",
+      }),
+    });
 
-        const { output: fragmentTitleOutput } =
-          await fragmentTitleGenerator.run(result.state.data.summary);
-        const { output: responseOutput } = await responseGenerator.run(
-          result.state.data.summary
-        );
+    const { output: fragmentTitleOutput } = await fragmentTitleGenerator.run(
+      result.state.data.summary
+    );
+    const { output: responseOutput } = await responseGenerator.run(
+      result.state.data.summary
+    );
 
-        const generateFragmentTitle = () => {
-          const firstOutput = fragmentTitleOutput[0];
+    const generateFragmentTitle = () => {
+      const firstOutput = fragmentTitleOutput[0];
 
-          if (firstOutput.type === "text") {
-            return firstOutput.content || "Fragment";
-          }
+      if (firstOutput.type === "text") {
+        return firstOutput.content || "Fragment";
+      }
 
-          if (firstOutput.type === "tool_result") {
-            const content = firstOutput.content;
-            if (Array.isArray(content)) {
-              return content[0]?.content || "Fragment";
-            }
-            return content || "Fragment";
-          }
+      if (firstOutput.type === "tool_result") {
+        const content = firstOutput.content;
+        if (Array.isArray(content)) {
+          return content[0]?.content || "Fragment";
+        }
+        return content || "Fragment";
+      }
 
-          return "Fragment";
-        };
+      return "Fragment";
+    };
 
-        const generateResponse = () => {
-          const firstOutput = responseOutput[0];
+    const generateResponse = () => {
+      const firstOutput = responseOutput[0];
 
-          if (firstOutput.type === "text") {
-            return firstOutput.content || "Here you go!";
-          }
+      if (firstOutput.type === "text") {
+        return firstOutput.content || "Here you go!";
+      }
 
-          if (firstOutput.type === "tool_result") {
-            const content = firstOutput.content;
-            if (Array.isArray(content)) {
-              return content[0]?.content || "Here you go!";
-            }
-            return content || "Here you go!";
-          }
+      if (firstOutput.type === "tool_result") {
+        const content = firstOutput.content;
+        if (Array.isArray(content)) {
+          return content[0]?.content || "Here you go!";
+        }
+        return content || "Here you go!";
+      }
 
-          return "Here you go!";
-        };
+      return "Here you go!";
+    };
 
     // 🌐 Step 4: Get sandbox URL on port 3000
 

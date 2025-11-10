@@ -3,15 +3,42 @@ import { formatDuration, intervalToDuration } from "date-fns";
 import { CrownIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { useEffect, useMemo, useState } from "react";
 
-interface props {
+interface Props {
   points: number;
   msBeforeNext: number;
 }
 
-export function Usage({ points, msBeforeNext }: props) {
+export function Usage({ points, msBeforeNext }: Props) {
   const { has } = useAuth();
   const hasProAccess = has?.({ plan: "pro" });
+
+  // Capture current time and refresh every hour
+  const [baseTime, setBaseTime] = useState(() => Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBaseTime(Date.now());
+    }, 60 * 60 * 1000); // refresh every hour
+    return () => clearInterval(interval);
+  }, []);
+
+  // Compute duration between now and reset time
+  const resetTime = useMemo(() => {
+    try {
+      return formatDuration(
+        intervalToDuration({
+          start: new Date(),
+          end: new Date(baseTime + msBeforeNext),
+        }),
+        { format: ["months", "days", "hours"] }
+      );
+    } catch (error) {
+      console.error("Error formatting duration", error);
+      return "Soon";
+    }
+  }, [baseTime, msBeforeNext]);
 
   return (
     <div className="rounded-t-xl bg-background border border-b-0 p-2.5">
@@ -20,19 +47,7 @@ export function Usage({ points, msBeforeNext }: props) {
           <p className="text-sm">
             {points} {hasProAccess ? "" : "free"} points
           </p>
-
-          <p className="text-xs text-muted-foreground">
-            Reset in{" "}
-            {formatDuration(
-              intervalToDuration({
-                start: new Date(),
-                end: new Date(Date.now() + msBeforeNext),
-              }),
-              {
-                format: ["months", "days", "hours", "minutes", "seconds"],
-              }
-            )}
-          </p>
+          <p className="text-xs text-muted-foreground">Reset in {resetTime}</p>
         </div>
 
         {!hasProAccess && (
