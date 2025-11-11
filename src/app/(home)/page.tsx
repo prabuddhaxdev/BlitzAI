@@ -17,7 +17,7 @@ export default function Home() {
         </div>
 
         <h1 className="text-2xl md:text-5xl font-bold text-center">
-          Bring your ideas to life with Blitz AI.
+          Bring your ideas to life with Blitz AI
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground text-center">
