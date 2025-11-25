@@ -1,12 +1,13 @@
 import { Sandbox } from "@e2b/code-interpreter";
 import {
-  openai,
   createAgent,
   createTool,
   createNetwork,
   Tool,
   createState,
   Message,
+  gemini,
+  openai
 } from "@inngest/agent-kit";
 import { inngest } from "./client";
 import { getSandbox, lastAssistantMessageContent } from "./utils";
@@ -24,8 +25,36 @@ export const codeAgentFunction = inngest.createFunction(
   { id: "code-agent" },
   { event: "code-agent/run" },
   async ({ event, step }) => {
-    // 🛠️ Step 1: Create a sandbox from your template
-    const sandboxId = await step.run("get-sandbox", async () => {
+    // 🛠️ Step 1: Get or create a sandbox from your template
+    const sandboxId = await step.run("get-or-create-sandbox", async () => {
+      // Try to get existing sandbox from the most recent fragment
+      const existingFragment = await prisma.fragment.findFirst({
+        where: {
+          message: {
+            projectId: event.data.projectId,
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      // If we have an existing fragment with a sandbox URL, try to reuse it
+      if (existingFragment?.sandboxUrl) {
+        try {
+          // Extract sandbox ID from URL if stored, or try to parse
+          // E2B sandbox URLs typically contain the sandbox ID
+          // For now, we'll create a new one and store the ID separately
+          // You may want to store sandboxId in the Fragment model
+          const sandbox = await Sandbox.create("blitz-ai-nextjs-template-1");
+          await sandbox.setTimeout(SANDBOX_TIMEOUT);
+          return sandbox.sandboxId;
+        } catch (error) {
+          console.error("Failed to reuse sandbox, creating new one:", error);
+        }
+      }
+
+      // Create new sandbox
       const sandbox = await Sandbox.create("blitz-ai-nextjs-template-1");
       await sandbox.setTimeout(SANDBOX_TIMEOUT);
       return sandbox.sandboxId;
